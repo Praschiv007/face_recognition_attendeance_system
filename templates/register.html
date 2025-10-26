@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Employee - Face Recognition Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Register New Employee</h1>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/register" class="nav-item active">Register Employee</a>
+            <a href="/attendance" class="nav-item">Mark Attendance</a>
+            <a href="/records" class="nav-item">View Records</a>
+            <a href="/employees" class="nav-item">Employees</a>
+        </nav>
+
+        <main class="main-content">
+            <div class="card">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="emp_id">Employee ID *</label>
+                        <input type="text" id="emp_id" name="emp_id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input type="text" id="department" name="department">
+                    </div>
+
+                    <div class="camera-section">
+                        <h3>Capture Face Photo</h3>
+                        <div class="video-container">
+                            <video id="video" autoplay></video>
+                            <canvas id="canvas" style="display: none;"></canvas>
+                        </div>
+                        <div class="camera-controls">
+                            <button type="button" id="startCamera" class="btn btn-primary">Start Camera</button>
+                            <button type="button" id="captureBtn" class="btn btn-success" disabled>Capture Photo</button>
+                            <button type="button" id="retakeBtn" class="btn btn-secondary" style="display: none;">Retake</button>
+                        </div>
+                        <div id="preview" style="display: none;">
+                            <h4>Captured Photo:</h4>
+                            <img id="capturedImage" alt="Captured face">
+                        </div>
+                    </div>
+
+                    <div id="message" class="message"></div>
+
+                    <button type="submit" class="btn btn-primary btn-large" id="submitBtn" disabled>Register Employee</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+</body>
+</html>

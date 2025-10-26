@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Attendance Records</h1>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/register" class="nav-item">Register Employee</a>
+            <a href="/attendance" class="nav-item">Mark Attendance</a>
+            <a href="/records" class="nav-item active">View Records</a>
+            <a href="/employees" class="nav-item">Employees</a>
+        </nav>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="filter-section">
+                    <label for="dateFilter">Filter by Date:</label>
+                    <input type="date" id="dateFilter">
+                    <button id="filterBtn" class="btn btn-primary">Filter</button>
+                    <button id="clearFilter" class="btn btn-secondary">Show All</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="recordsTable">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Check-in Time</th>
+                                <th>Check-out Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsBody">
+                            {% for record in records %}
+                            <tr>
+                                <td>{{ record[0] }}</td>
+                                <td>{{ record[1] }}</td>
+                                <td>{{ record[4] }}</td>
+                                <td>{{ record[2] if record[2] else '-' }}</td>
+                                <td>{{ record[3] if record[3] else '-' }}</td>
+                                <td><span class="status-badge status-{{ record[5] }}">{{ record[5] }}</span></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="no-data">No attendance records found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/records.js') }}"></script>
+</body>
+</html>

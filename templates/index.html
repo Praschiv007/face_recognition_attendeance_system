@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Face Recognition Attendance System</h1>
+            <p class="subtitle">Automated Employee Attendance Tracking</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/" class="nav-item active">Home</a>
+            <a href="/register" class="nav-item">Register Employee</a>
+            <a href="/attendance" class="nav-item">Mark Attendance</a>
+            <a href="/records" class="nav-item">View Records</a>
+            <a href="/employees" class="nav-item">Employees</a>
+        </nav>
+
+        <main class="main-content">
+            <div class="card">
+                <h2>Welcome to the Attendance System</h2>
+                <p>This system uses advanced face recognition technology to automatically track employee attendance.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <h3>Register New Employee</h3>
+                        <p>Add new employees to the system with their face data</p>
+                        <a href="/register" class="btn btn-primary">Register</a>
+                    </div>
+                    
+                    <div class="feature">
+                        <h3>Mark Attendance</h3>
+                        <p>Employees can check in/out using face recognition</p>
+                        <a href="/attendance" class="btn btn-success">Mark Attendance</a>
+                    </div>
+                    
+                    <div class="feature">
+                        <h3>View Records</h3>
+                        <p>View attendance records and reports</p>
+                        <a href="/records" class="btn btn-info">View Records</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>How It Works</h3>
+                <ol>
+                    <li><strong>Registration:</strong> New employees register by providing their details and capturing their face</li>
+                    <li><strong>Check-in/out:</strong> Employees simply look at the camera to mark their attendance</li>
+                    <li><strong>Tracking:</strong> The system automatically records check-in and check-out times</li>
+                    <li><strong>Reports:</strong> View comprehensive attendance reports and statistics</li>
+                </ol>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

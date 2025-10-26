@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance - Face Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mark Attendance</h1>
+            <p class="subtitle">Look at the camera to check in/out</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/register" class="nav-item">Register Employee</a>
+            <a href="/attendance" class="nav-item active">Mark Attendance</a>
+            <a href="/records" class="nav-item">View Records</a>
+            <a href="/employees" class="nav-item">Employees</a>
+        </nav>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="camera-section">
+                    <div class="video-container">
+                        <video id="video" autoplay></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                    </div>
+                    <div class="camera-controls">
+                        <button type="button" id="startCamera" class="btn btn-primary">Start Camera</button>
+                        <button type="button" id="markAttendance" class="btn btn-success" disabled>Mark Attendance</button>
+                    </div>
+                    <div id="preview" style="display: none;">
+                        <h4>Captured Photo:</h4>
+                        <img id="capturedImage" alt="Captured face">
+                    </div>
+                </div>
+
+                <div id="message" class="message"></div>
+                
+                <div id="employeeInfo" class="employee-info" style="display: none;">
+                    <h3>Attendance Marked Successfully!</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Employee ID:</label>
+                            <span id="infoEmpId"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Name:</label>
+                            <span id="infoName"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Department:</label>
+                            <span id="infoDept"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Time:</label>
+                            <span id="infoTime"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>Instructions:</h3>
+                <ul>
+                    <li>Click "Start Camera" to activate your webcam</li>
+                    <li>Position your face clearly in the camera view</li>
+                    <li>Ensure good lighting and remove any obstructions</li>
+                    <li>Click "Mark Attendance" to capture and verify your face</li>
+                    <li>First capture of the day = Check-in, Second = Check-out</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/attendance.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Employees</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Registered Employees</h1>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/" class="nav-item">Home</a>
+            <a href="/register" class="nav-item">Register Employee</a>
+            <a href="/attendance" class="nav-item">Mark Attendance</a>
+            <a href="/records" class="nav-item">View Records</a>
+            <a href="/employees" class="nav-item active">Employees</a>
+        </nav>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3 id="totalEmployees">{{ employees|length }}</h3>
+                        <p>Total Employees</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="employeesTable">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Registered Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for emp in employees %}
+                            <tr>
+                                <td>{{ emp[0] }}</td>
+                                <td>{{ emp[1] }}</td>
+                                <td>{{ emp[2] if emp[2] else '-' }}</td>
+                                <td>{{ emp[3] if emp[3] else '-' }}</td>
+                                <td>{{ emp[4] }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="no-data">No employees registered yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
