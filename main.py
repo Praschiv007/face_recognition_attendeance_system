@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from database import Database
 from face_recognition_module import FaceRecognitionSystem
+from config import Config
 from datetime import datetime, date
 import os
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(24)
+# Validate configuration
+Config.validate()
 
-db = Database()
+app = Flask(__name__)
+app.config['SECRET_KEY'] = Config.SECRET_KEY
+
+db = Database(Config.DATABASE_NAME)
 face_system = FaceRecognitionSystem()
 face_system.load_encodings_from_db(db)
 
@@ -142,4 +146,4 @@ def api_employees():
         return jsonify({'success': False, 'message': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host=Config.HOST, port=Config.PORT, debug=Config.FLASK_DEBUG)

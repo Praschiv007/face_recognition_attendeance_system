@@ -127,7 +127,6 @@ class Database:
                 FROM attendance a
                 JOIN employees e ON a.emp_id = e.emp_id
                 ORDER BY a.date DESC, a.check_in_time DESC
-                LIMIT 50
             ''')
         
         records = cursor.fetchall()

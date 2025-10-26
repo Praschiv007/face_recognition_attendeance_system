@@ -5,6 +5,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 import os
+from config import Config
 
 class FaceRecognitionSystem:
     def __init__(self):
@@ -18,6 +19,16 @@ class FaceRecognitionSystem:
         
         self.recognizer = cv2.face.LBPHFaceRecognizer_create()
         self.is_trained = False
+        
+        # Load configuration
+        self.confidence_threshold = Config.RECOGNITION_CONFIDENCE_THRESHOLD
+        self.min_face_size = Config.MIN_FACE_SIZE
+        self.min_image_width = Config.MIN_IMAGE_WIDTH
+        self.min_image_height = Config.MIN_IMAGE_HEIGHT
+        self.face_encoding_width = Config.FACE_ENCODING_WIDTH
+        self.face_encoding_height = Config.FACE_ENCODING_HEIGHT
+        self.scale_factor = Config.FACE_DETECTION_SCALE_FACTOR
+        self.min_neighbors = Config.FACE_DETECTION_MIN_NEIGHBORS
     
     def load_encodings_from_db(self, db):
         employees = db.get_employee_encodings()
@@ -67,9 +78,9 @@ class FaceRecognitionSystem:
             
             faces = self.face_detector.detectMultiScale(
                 gray,
-                scaleFactor=1.1,
-                minNeighbors=5,
-                minSize=(100, 100)
+                scaleFactor=self.scale_factor,
+                minNeighbors=self.min_neighbors,
+                minSize=(self.min_face_size, self.min_face_size)
             )
             
             if len(faces) == 0:
@@ -80,7 +91,7 @@ class FaceRecognitionSystem:
             
             (x, y, w, h) = faces[0]
             face_roi = gray[y:y+h, x:x+w]
-            face_roi = cv2.resize(face_roi, (200, 200))
+            face_roi = cv2.resize(face_roi, (self.face_encoding_width, self.face_encoding_height))
             
             encoding_blob = pickle.dumps(face_roi)
             return encoding_blob, "Face encoded successfully"
@@ -97,9 +108,9 @@ class FaceRecognitionSystem:
             
             faces = self.face_detector.detectMultiScale(
                 gray,
-                scaleFactor=1.1,
-                minNeighbors=5,
-                minSize=(100, 100)
+                scaleFactor=self.scale_factor,
+                minNeighbors=self.min_neighbors,
+                minSize=(self.min_face_size, self.min_face_size)
             )
             
             if len(faces) == 0:
@@ -107,11 +118,11 @@ class FaceRecognitionSystem:
             
             (x, y, w, h) = faces[0]
             face_roi = gray[y:y+h, x:x+w]
-            face_roi = cv2.resize(face_roi, (200, 200))
+            face_roi = cv2.resize(face_roi, (self.face_encoding_width, self.face_encoding_height))
             
             label, confidence = self.recognizer.predict(face_roi)
             
-            if confidence < 70:
+            if confidence < self.confidence_threshold:
                 emp_id = self.known_face_ids[label]
                 name = self.known_face_names[label]
                 match_confidence = 100 - confidence
@@ -128,14 +139,14 @@ class FaceRecognitionSystem:
             
             height, width = gray.shape[:2]
             
-            if width < 200 or height < 200:
-                return False, "Image resolution too low. Please use better lighting or camera"
+            if width < self.min_image_width or height < self.min_image_height:
+                return False, f"Image resolution too low (min: {self.min_image_width}x{self.min_image_height}). Please use better lighting or camera"
             
             faces = self.face_detector.detectMultiScale(
                 gray,
-                scaleFactor=1.1,
-                minNeighbors=5,
-                minSize=(100, 100)
+                scaleFactor=self.scale_factor,
+                minNeighbors=self.min_neighbors,
+                minSize=(self.min_face_size, self.min_face_size)
             )
             
             if len(faces) == 0:
@@ -146,8 +157,8 @@ class FaceRecognitionSystem:
             
             (x, y, w, h) = faces[0]
             
-            if w < 100 or h < 100:
-                return False, "Face too small. Please move closer to the camera"
+            if w < self.min_face_size or h < self.min_face_size:
+                return False, f"Face too small (min: {self.min_face_size}x{self.min_face_size}). Please move closer to the camera"
             
             return True, "Image quality acceptable"
             

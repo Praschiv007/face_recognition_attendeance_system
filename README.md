@@ -20,6 +20,66 @@ An automated employee attendance tracking system using face recognition technolo
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Camera Access**: WebRTC getUserMedia API
 
+## Installation
+
+### Prerequisites
+- Python 3.11 or higher
+- Webcam or camera device
+- Modern web browser
+
+### Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Praschiv007/face_recognition_attendeance_system.git
+cd face_recognition_attendeance_system
+```
+
+2. Install dependencies:
+```bash
+pip install flask opencv-contrib-python pillow numpy python-dotenv
+```
+
+**Note**: Use `opencv-contrib-python` (not `opencv-python`) as it includes the face recognition module.
+
+3. Configure environment variables:
+```bash
+cp .env.example .env
+```
+
+Edit `.env` to customize settings (optional - defaults are provided).
+
+4. Run the application:
+```bash
+python main.py
+```
+
+5. Open your browser and navigate to `http://localhost:5000`
+
+## Configuration
+
+The application can be configured via the `.env` file:
+
+### Flask Settings
+- `HOST`: Server host (default: 0.0.0.0)
+- `PORT`: Server port (default: 5000)
+- `SECRET_KEY`: Flask secret key for sessions
+- `FLASK_DEBUG`: Enable debug mode (default: False)
+
+### Face Recognition Settings
+- `RECOGNITION_CONFIDENCE_THRESHOLD`: Recognition threshold 0-100, lower = stricter (default: 70)
+- `MIN_FACE_SIZE`: Minimum face size in pixels (default: 100)
+- `MIN_IMAGE_WIDTH`/`MIN_IMAGE_HEIGHT`: Minimum image resolution (default: 200x200)
+- `FACE_ENCODING_WIDTH`/`FACE_ENCODING_HEIGHT`: Face encoding dimensions (default: 200x200)
+- `FACE_DETECTION_SCALE_FACTOR`: Haar cascade scale factor (default: 1.1)
+- `FACE_DETECTION_MIN_NEIGHBORS`: Haar cascade min neighbors (default: 5)
+
+### Database Settings
+- `DATABASE_NAME`: SQLite database file name (default: attendance.db)
+
+### Other Settings
+- `MAX_RECORDS_LIMIT`: Maximum attendance records to display (default: 50)
+
 ## How It Works
 
 1. **Registration**: New employees provide their ID, name, and other details, then capture their face photo

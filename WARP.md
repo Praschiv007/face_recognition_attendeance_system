@@ -7,19 +7,37 @@ Face Recognition Attendance System - An automated employee attendance tracking s
 
 ## Development Commands
 
+### Setup
+1. Copy the environment template:
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` to configure your settings (optional - defaults are provided)
+
+3. Install required packages:
+```bash
+pip install flask opencv-contrib-python pillow numpy python-dotenv
+```
+
+Note: `opencv-contrib-python` is required (not just `opencv-python`) as it includes the face recognition module (`cv2.face`).
+
 ### Running the Application
 ```bash
 python main.py
 ```
-The application runs on `http://0.0.0.0:5000` by default.
+The application runs on `http://0.0.0.0:5000` by default (configurable via `.env`).
 
-### Installing Dependencies
-This project appears to use `uv` for dependency management. Install required packages:
-```bash
-pip install flask opencv-contrib-python pillow numpy
-```
+### Environment Variables
+All configuration is managed through `.env` file:
+- **Flask**: `HOST`, `PORT`, `SECRET_KEY`, `FLASK_DEBUG`
+- **Database**: `DATABASE_NAME`
+- **Face Recognition**: `RECOGNITION_CONFIDENCE_THRESHOLD` (0-100, lower = stricter)
+- **Detection Params**: `MIN_FACE_SIZE`, `MIN_IMAGE_WIDTH/HEIGHT`, `FACE_ENCODING_WIDTH/HEIGHT`
+- **Haar Cascade**: `FACE_DETECTION_SCALE_FACTOR`, `FACE_DETECTION_MIN_NEIGHBORS`
+- **Records**: `MAX_RECORDS_LIMIT`
 
-Note: `opencv-contrib-python` is required (not just `opencv-python`) as it includes the face recognition module (`cv2.face`).
+See `.env.example` for all available options and defaults.
 
 ## Architecture
 
