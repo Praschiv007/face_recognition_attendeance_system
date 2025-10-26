@@ -9,8 +9,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>Mark Attendance</h1>
-            <p class="subtitle">Look at the camera to check in/out</p>
+            <h1>Automatic Attendance System</h1>
+            <p class="subtitle">Continuous face detection and recognition</p>
         </header>
 
         <nav class="nav-menu">
@@ -23,25 +23,33 @@
 
         <main class="main-content">
             <div class="card">
+                <div class="status-display">
+                    <h3>Detection Status:</h3>
+                    <div id="detectionStatus" class="detection-status status-inactive">Inactive</div>
+                </div>
+
                 <div class="camera-section">
                     <div class="video-container">
                         <video id="video" autoplay></video>
                         <canvas id="canvas" style="display: none;"></canvas>
+                        <div class="video-overlay">
+                            <div class="face-indicator"></div>
+                        </div>
                     </div>
                     <div class="camera-controls">
-                        <button type="button" id="startCamera" class="btn btn-primary">Start Camera</button>
-                        <button type="button" id="markAttendance" class="btn btn-success" disabled>Mark Attendance</button>
-                    </div>
-                    <div id="preview" style="display: none;">
-                        <h4>Captured Photo:</h4>
-                        <img id="capturedImage" alt="Captured face">
+                        <button type="button" id="startDetection" class="btn btn-primary btn-large">
+                            <span>▶</span> Start Automatic Detection
+                        </button>
+                        <button type="button" id="stopDetection" class="btn btn-secondary btn-large" style="display: none;">
+                            <span>■</span> Stop Detection
+                        </button>
                     </div>
                 </div>
 
                 <div id="message" class="message"></div>
                 
                 <div id="employeeInfo" class="employee-info" style="display: none;">
-                    <h3>Attendance Marked Successfully!</h3>
+                    <h3>✓ Attendance Marked Successfully!</h3>
                     <div class="info-grid">
                         <div class="info-item">
                             <label>Employee ID:</label>
@@ -64,14 +72,25 @@
             </div>
 
             <div class="instructions">
-                <h3>Instructions:</h3>
+                <h3>How It Works:</h3>
                 <ul>
-                    <li>Click "Start Camera" to activate your webcam</li>
-                    <li>Position your face clearly in the camera view</li>
-                    <li>Ensure good lighting and remove any obstructions</li>
-                    <li>Click "Mark Attendance" to capture and verify your face</li>
-                    <li>First capture of the day = Check-in, Second = Check-out</li>
+                    <li><strong>Automatic Detection:</strong> Click "Start Automatic Detection" to begin</li>
+                    <li><strong>No Button Needed:</strong> Just stand in front of the camera</li>
+                    <li><strong>Continuous Scanning:</strong> The system scans for faces every 2 seconds</li>
+                    <li><strong>Auto Recognition:</strong> When a registered face is detected, attendance is marked automatically</li>
+                    <li><strong>Cooldown Period:</strong> Each person can mark attendance once every 30 seconds</li>
+                    <li><strong>First scan = Check-in, Second scan = Check-out</strong></li>
                 </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Best Results:</h4>
+                    <ul>
+                        <li>Ensure good lighting</li>
+                        <li>Face the camera directly</li>
+                        <li>Remove glasses or masks if possible</li>
+                        <li>Stay within camera view for 2-3 seconds</li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>
